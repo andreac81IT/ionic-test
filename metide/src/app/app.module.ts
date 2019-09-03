@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import {CountryService} from './services/country.service';
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpRequest } from '@angular/common/http';
 
 export function initializeApp(appConfig: AppConfigService) {
@@ -20,6 +21,7 @@ export function initializeApp(appConfig: AppConfigService) {
   providers: [
     StatusBar,
     SplashScreen,
+    CountryService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 
     AppConfigService,

@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './app-config-service';
+import { map } from 'rxjs/operators';
+
 
 export abstract class AbstractRestService<T>{
     
@@ -13,8 +15,15 @@ export abstract class AbstractRestService<T>{
     }
 
 
-    protected listFromUrl (url : string) : T[]{
-        return null;
+    /**
+     * Carica una lista di risorse da un url,
+     * il tipo ritornato è quello specificato dal parametro generico T.
+     */
+    protected listFromUrl (url : string) : Observable<T[]>{
+        let authorizationData = 'Basic ' + btoa(AppConfigService.settings.userName + ':' + AppConfigService.settings.password);
+        this.headers = this.headers.set('Authorization', authorizationData);
+        const retVal = this.httpClient.get<T[]>(`${url}`).pipe(map((data: any) => data));
+        return retVal;
     }
 
 }

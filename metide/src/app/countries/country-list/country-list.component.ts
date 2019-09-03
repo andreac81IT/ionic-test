@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
+import {CountryService} from '../../services/country.service';
+import { Country } from '../../models/country.model';
 
 @Component({
   selector: 'app-country-list',
@@ -7,8 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CountryListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private countryService : CountryService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const countries = this.retrieveListOfCountries();
+
+  }
+
+  retrieveListOfCountries() {
+    this.countryService.listFromUrl().pipe(map(
+      (countries: any[]) => this.convertCountries(countries)
+    ));
+  }
+
+
+  convertCountries(countries: Country[]) {
+    return countries.map(country => { return country });
+  }
+
 
 }
