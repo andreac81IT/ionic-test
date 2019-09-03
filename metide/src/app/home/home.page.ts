@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AppConfigService} from '../services/app-config-service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor() {
+  }
 
 }
