@@ -11,10 +11,12 @@ import { getDistance } from 'geolib';
 })
 export class CountryListComponent implements OnInit {
 
+  countries : Country[];
+
   constructor(private countryService : CountryService) { }
 
   ngOnInit() {
-    const countries = this.retrieveListOfCountries();
+    this.countries = this.retrieveListOfCountries();
 
   }
 
