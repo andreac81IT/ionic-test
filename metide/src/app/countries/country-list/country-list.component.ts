@@ -19,12 +19,7 @@ export class CountryListComponent implements OnInit {
   }
 
   retrieveListOfCountries() : Country[]{
-    /**
-    this.countryService.mockList().pipe(map(
-      (countries: any[]) => this.convertCountries(countries)
-    ));
-    */
-     const result = this.countryService.mockList();
+     return this.countryService.retrieveCountryOrderByMetideGeoLocation();
   }
 
 

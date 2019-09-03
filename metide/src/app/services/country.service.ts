@@ -21,7 +21,8 @@ export class CountryService extends AbstractRestService<Country>{
    }
 
 
-   public retrieveCountryOrderByMetideGeoLocation() {
+   public retrieveCountryOrderByMetideGeoLocation() : Country[]{
+      
       //geo locazione di metide
       const metideLocation = {
          latitude: 45.5546714,
@@ -32,7 +33,13 @@ export class CountryService extends AbstractRestService<Country>{
 
       //filtriamo la lista andando ad escludere gli elementi che non hanno una latitudine o una longitudine
 
-      geoList = geoList.filter(obj => !obj.latitude || !obj.longitude);
+      geoList.forEach(
+         (item, index) => {
+            if(!item.latitude || !item.longitude){
+               geoList.splice(index,1);
+            }
+          }
+      );
 
       //creiamo una funzione di ordine che va a ad ordinare i paesi in base alla distanza dal quartier generale di metide.
       let orderFunction = (geo1, geo2) => {
@@ -55,6 +62,7 @@ export class CountryService extends AbstractRestService<Country>{
     * Mock del servizio, problema di autenticazione sulla chiamata al servizio.
     */
    private mockList(): Country[] {
+      
       const geolocations: Country[] = [
          {
             "id": "1",
