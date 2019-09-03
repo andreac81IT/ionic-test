@@ -1,5 +1,7 @@
 {
   "name": "metide",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
