@@ -15,11 +15,11 @@
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
     <platform name="browser">
-        <preference name="SplashScreen" value="resources/logo-metide-white.png" />
+        <preference name="SplashScreen" value="resources/logo-metide@2x.png" />
         <preference name="SplashShowOnlyFirstTime" value="false" />
         <preference name="SplashScreenDelay" value="3000" />
-        <preference name="SplashScreenWidth" value="200" />
-        <preference name="SplashScreenHeight" value="200" />
+        <preference name="SplashScreenWidth" value="440" />
+        <preference name="SplashScreenHeight" value="76" />
     </platform>
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
