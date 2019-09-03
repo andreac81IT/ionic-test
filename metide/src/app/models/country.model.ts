@@ -1,12 +1,12 @@
 export class Country{
-    id : string;
+    id : string | number;
     enabled : string;
     code3l : string;
     code2l : string;
     name : string;
     name_official : string;
-    flag : URL;
-    latitude : string;
-    longitude : string;
+    flag : string;
+    latitude ? : string;
+    longitude ? : string;
     zoom : string;
 }
