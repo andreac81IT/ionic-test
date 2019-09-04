@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-item>
-    <ion-textarea placeholder="Enter a description for country..."></ion-textarea>
+    <ion-textarea [(ngModel)]="text" placeholder="Enter a description for country..."></ion-textarea>
   </ion-item>
   <ion-button (click)="closeModal()">Close</ion-button>
 </ion-content>

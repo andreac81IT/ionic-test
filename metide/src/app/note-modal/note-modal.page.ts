@@ -12,19 +12,17 @@ import { Note } from '../models/note.model';
 })
 export class NoteModalPage implements OnInit {
 
-  private id: string | number;
-  private countryName: string;
-  private text: string;
+  private country : Country;
   private toUpdate = false;
+  text : string;
 
   constructor(protected navParams: NavParams, protected modalController: ModalController, protected noteService: NoteService) {
   }
 
   ngOnInit(): void {
-    this.id = this.navParams.get('id');
-    this.countryName = this.navParams.get("countryName");
-
-    const result = this.noteService.list({ "country": this.id }).subscribe(
+    const val = this.navParams.get('country');
+    this.country = JSON.parse(val);
+    const result = this.noteService.list({ "country": this.country.id }).subscribe(
       (result: Note[]) => {
         if (result && result.length > 0) {
           this.text = result[0].text;
@@ -37,6 +35,7 @@ export class NoteModalPage implements OnInit {
       }
     );
   }
+
   public closeModal() {
     this.modalController.dismiss();
   }

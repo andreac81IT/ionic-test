@@ -45,11 +45,14 @@ export class CountryListComponent implements OnInit {
     const modal = await this.modalController.create({
       component: NoteModalPage,
       componentProps: {
-        'id': country.id,
-        "countryName": country.name
+        'country': this.serialize(country)
       }
     });
     return await modal.present();
   }
-
+  
+  protected serialize(item: any): string {
+    return JSON.stringify(item);
+  }
+  
 }
