@@ -9,7 +9,7 @@ export abstract class AbstractRestService<T>{
     protected headers = new HttpHeaders();
 
     constructor(
-        protected httpClient: HttpClient,protected _endpoint: string) {
+        protected httpClient: HttpClient,protected endpoint: string) {
         this.headers = this.headers.set('Content-Type', 'application/json');
         this.headers = this.headers.set('Accept', 'application/json');
     }
@@ -22,14 +22,10 @@ export abstract class AbstractRestService<T>{
     protected listFromUrl (url : string) : any{
         let results : any;
         let authorizationData = 'Basic ' + btoa(AppConfigService.settings.userName + ':' + AppConfigService.settings.password);
-        
         this.headers.set('Authorization',authorizationData);
         this.headers.set('Access-Control-Allow-Origin','*');
         this.headers.set('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS');
         this.headers.set('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
-
-        
-
         this.httpClient.get(`${url}`, {
             headers : this.headers
           })
@@ -37,11 +33,19 @@ export abstract class AbstractRestService<T>{
             results = data;
             console.log(data);
           })
-        return results;
-
-        
+        return results;        
     }
 
+
+    update(id: number | string, item: T): Observable<T> {
+        return this.httpClient
+          .put<T>(`${this.endpoint}/${id}`, this.serialize(item), { headers: this.headers })
+          .pipe(map(data => this.deserialize(data)));
+      }
+
+      protected serialize(item: T): string {
+        return JSON.stringify(item);
+      }
 
     protected deserialize(item: any): T {
         return item as T;
