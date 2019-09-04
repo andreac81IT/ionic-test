@@ -37,7 +37,7 @@ export class NoteStorageService {
       }
       let toKeep: Note[] = [];
       for (let i of items) {
-        if (i.countryId !== countryId) {
+        if (i.countryId == countryId) {
           return i;
         }
       }
