@@ -30,14 +30,14 @@ export class NoteStorageService {
   }
 
 
-  getNoteByCountry(countryId : string | number) : Promise<any> {
+  getNoteByCountry(countryId : string | number) : Promise<any>{
     return this.storage.get(ITEMS_KEY).then((items: Note[]) => {
       if (!items || items.length === 0) {
         return null;
       }
       let toKeep: Note[] = [];
       for (let i of items) {
-        if (i.countryId == countryId) {
+        if (i.countryId !== countryId) {
           return i;
         }
       }
@@ -54,7 +54,7 @@ export class NoteStorageService {
       let newItems: Note[] = [];
 
       for (let i of items) {
-        if (i.id === item.id) {
+        if (i.countryId === item.countryId) {
           newItems.push(item);
         } else {
           newItems.push(i);
@@ -66,7 +66,7 @@ export class NoteStorageService {
   }
 
   // DELETE
-  deleteNote(id: number | string): Promise<Note> {
+  deleteNoteByCountryId(countryId: number | string): Promise<Note> {
     return this.storage.get(ITEMS_KEY).then((items: Note[]) => {
       if (!items || items.length === 0) {
         return null;
@@ -75,7 +75,7 @@ export class NoteStorageService {
       let toKeep: Note[] = [];
 
       for (let i of items) {
-        if (i.id !== id) {
+        if (i.countryId !== countryId) {
           toKeep.push(i);
         }
       }
