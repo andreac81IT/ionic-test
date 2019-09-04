@@ -27,7 +27,7 @@ export class NoteModalPage implements OnInit {
     const val = this.navParams.get('country');
     this.country = JSON.parse(val);
     
-    this.noteStorageService.getNoteByCountry(this.note.countryId).then(
+    this.noteStorageService.getNoteByCountry(this.country.id).then(
       note => {
         this.note = note;
       }
