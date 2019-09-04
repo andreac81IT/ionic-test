@@ -9,13 +9,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {CountryService} from './services/country.service';
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpRequest } from '@angular/common/http';
+import { NoteModalPage } from './note-modal/note-modal.page';
 
 export function initializeApp(appConfig: AppConfigService) {
   return () => appConfig.load();
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,NoteModalPage],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule],
   providers: [

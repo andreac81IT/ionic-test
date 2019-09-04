@@ -3,6 +3,8 @@ import { map } from 'rxjs/operators';
 import {CountryService} from '../../services/country.service';
 import { Country } from '../../models/country.model';
 import { getDistance } from 'geolib';
+import { ModalController } from '@ionic/angular';
+import { NoteModalPage } from 'src/app/note-modal/note-modal.page';
 
 @Component({
   selector: 'app-country-list',
@@ -13,7 +15,8 @@ export class CountryListComponent implements OnInit {
 
   countries : Country[];
 
-  constructor(private countryService : CountryService) { }
+  constructor(private countryService : CountryService,
+              private modalController: ModalController) { }
 
   ngOnInit() {
     this.countries = this.retrieveListOfCountries();
@@ -30,5 +33,11 @@ export class CountryListComponent implements OnInit {
     return countries.map(country => { return country });
   }
 
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: NoteModalPage
+    });
+    return await modal.present();
+  }
 
 }
