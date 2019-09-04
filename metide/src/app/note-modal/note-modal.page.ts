@@ -13,6 +13,7 @@ import { Note } from '../models/note.model';
 export class NoteModalPage implements OnInit {
 
   private country : Country;
+  private note : Note;
   private toUpdate = false;
   text : string;
 
@@ -25,6 +26,7 @@ export class NoteModalPage implements OnInit {
     const result = this.noteService.list({ "country": this.country.id }).subscribe(
       (result: Note[]) => {
         if (result && result.length > 0) {
+          this.note = result[0];
           this.text = result[0].text;
           this.toUpdate = true;
         }
@@ -34,6 +36,29 @@ export class NoteModalPage implements OnInit {
         console.log("error");
       }
     );
+  }
+
+  /**
+   * Salva / aggiorna il testo di una nota.
+   */
+  public saveNote(){
+    if(this.toUpdate){
+      this.note.text = this.text;
+      this.noteService.update(this.note.id,this.note).subscribe(
+        (note: Note) => {
+          this.closeModal();
+        }
+      );
+    }else{
+      this.note = new Note();
+      this.note.countryId = this.country.id;
+      this.note.text = this.text;
+      this.noteService.create(this.note).subscribe(
+        (note: Note) => {
+          this.closeModal();
+        }
+      );
+    }
   }
 
   public closeModal() {
