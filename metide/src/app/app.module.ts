@@ -17,7 +17,7 @@ export function initializeApp(appConfig: AppConfigService) {
 
 @NgModule({
   declarations: [AppComponent,NoteModalPage],
-  entryComponents: [],
+  entryComponents: [NoteModalPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule],
   providers: [
     StatusBar,
