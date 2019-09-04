@@ -33,11 +33,14 @@ export class CountryListComponent implements OnInit {
     return countries.map(country => { return country });
   }
 
-  async presentModal() {
+  async presentModal(id : string | number) {
     const modal = await this.modalController.create({
-      component: NoteModalPage
+      component: NoteModalPage,
+      componentProps: {
+        'id': id
+      }
     });
     return await modal.present();
   }
-
+  
 }

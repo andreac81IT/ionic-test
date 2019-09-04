@@ -7,6 +7,9 @@
       <ion-col>
         National Flag
       </ion-col>
+      <ion-col>
+        Insert Note
+      </ion-col>
     </ion-row>
     <ion-row *ngFor="let row of countries">
       <ion-col width-50>
@@ -15,9 +18,12 @@
       <ion-col width-50>
         <img [src]="row.flag">
       </ion-col>
+      <ion-col width-25>
+        <ion-button (click)="presentModal(row.id)">Enter Description</ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
   
-  <ion-button (click)="presentModal()" > Open </ion-button>
+ 
 
 </p>
