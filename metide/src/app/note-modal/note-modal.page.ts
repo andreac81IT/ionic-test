@@ -3,6 +3,7 @@ import { ModalController, NavParams, } from '@ionic/angular';
 import { Country } from '../models/country.model';
 import { NoteService } from '../services/note.service';
 import { Note } from '../models/note.model';
+import { NoteStorageService } from '../services/note.storage.service';
 
 
 @Component({
@@ -17,25 +18,38 @@ export class NoteModalPage implements OnInit {
   private toUpdate = false;
   text : string;
 
-  constructor(protected navParams: NavParams, protected modalController: ModalController, protected noteService: NoteService) {
+  constructor(protected navParams: NavParams, protected modalController: ModalController, 
+    protected noteService: NoteService,
+    protected noteStorageService : NoteStorageService) {
   }
 
   ngOnInit(): void {
     const val = this.navParams.get('country');
     this.country = JSON.parse(val);
-    const result = this.noteService.list({ "country": this.country.id }).subscribe(
-      (result: Note[]) => {
-        if (result && result.length > 0) {
-          this.note = result[0];
-          this.text = result[0].text;
-          this.toUpdate = true;
-        }
-      },
-      error => {
-        //da inserire una modale di errore tecnico
-        console.log("error");
+    
+    this.noteStorageService.getNoteByCountry(this.note.countryId).then(
+      note => {
+        this.note = note;
       }
     );
+
+  }
+
+
+  public storageNote(){
+    if(this.toUpdate){
+      this.note.text = this.text;
+      this.noteStorageService.updateNote(this.note).then(note => {
+        this.closeModal();
+      });
+    }else{
+      this.note = new Note();
+      this.note.countryId = this.country.id;
+      this.note.text = this.text;
+      this.noteStorageService.addNote(this.note).then(note => {
+        this.closeModal();
+      });
+    }
   }
 
   /**

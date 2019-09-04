@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule, HttpRequest } from '@angular/commo
 import { NoteModalPage } from './note-modal/note-modal.page';
 import { NoteService } from './services/note.service';
 import { FormsModule } from '@angular/forms';
+import { IonicStorageModule } from '@ionic/storage';
 
 export function initializeApp(appConfig: AppConfigService) {
   return () => appConfig.load();
@@ -20,7 +21,9 @@ export function initializeApp(appConfig: AppConfigService) {
 @NgModule({
   declarations: [AppComponent,NoteModalPage],
   entryComponents: [NoteModalPage],
-  imports: [BrowserModule,FormsModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule],
+  imports: [BrowserModule,FormsModule, IonicModule.forRoot(),
+    IonicStorageModule.forRoot(), 
+  AppRoutingModule,HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
