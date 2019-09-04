@@ -2,8 +2,9 @@ import { AbstractRestService } from './abstract.rest.service';
 import { Country } from '../models/country.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { getDistance } from 'geolib';
+import { AppConfigService } from './app-config-service';
 
 
 
@@ -11,19 +12,36 @@ import { getDistance } from 'geolib';
 @Injectable()
 export class CountryService extends AbstractRestService<Country>{
 
+   protected static AUTH_SERVER_ADDRESS_COUNTRY: string = "https://us-central1-job-interview-cfe5a.cloudfunctions.net/countries";
 
    constructor(protected httpClient: HttpClient) {
       super(httpClient, "/country");
    }
 
-   listFromUrl(): Observable<Country[]> {
-      const url = "https://us-central1-job-interview-cfe5a.cloudfunctions.net/countries";
-      return super.listFromUrl(url);
+   /**
+  * Carica una lista di risorse da un url,
+  * Al momento viene mockato.
+  */
+   listCountriesFromUrl(): Country[] {
+     /*
+      let results: any;
+      let authorizationData = 'Basic ' + btoa(AppConfigService.settings.userName + ':' + AppConfigService.settings.password);
+      this.headers.append('Authorization', authorizationData);
+      this.headers.append('Access-Control-Allow-Origin', '*');
+      this.headers.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+      this.httpClient.get(`${CountryService.AUTH_SERVER_ADDRESS_COUNTRY}`, {
+         headers: this.headers
+      })
+         .subscribe(data => {
+            results = data;
+         });
+         */
+      return this.retrieveCountryOrderByMetideGeoLocation();
    }
 
 
-   public retrieveCountryOrderByMetideGeoLocation() : Country[]{
-      
+   retrieveCountryOrderByMetideGeoLocation(): Country[] {
+
       //geo locazione di metide
       const metideLocation = {
          latitude: 45.5546714,
@@ -36,15 +54,15 @@ export class CountryService extends AbstractRestService<Country>{
 
       geoList.forEach(
          (item, index) => {
-            if(!item.latitude || !item.longitude){
-               geoList.splice(index,1);
+            if (!item.latitude || !item.longitude) {
+               geoList.splice(index, 1);
             }
-          }
+         }
       );
 
       //creiamo una funzione di ordine che va a ad ordinare i paesi in base alla distanza dal quartier generale di metide.
       let orderFunction = (geo1, geo2) => {
-         
+
          return getDistance(
             { latitude: geo1.latitude, longitude: geo1.longitude }, { latitude: metideLocation.latitude, longitude: metideLocation.longitude }) >
 
@@ -63,7 +81,7 @@ export class CountryService extends AbstractRestService<Country>{
     * Mock del servizio, problema di autenticazione sulla chiamata al servizio.
     */
    private mockList(): Country[] {
-      
+
       const geolocations: Country[] = [
          {
             "id": "1",

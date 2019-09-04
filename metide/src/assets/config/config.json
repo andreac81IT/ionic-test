@@ -1,4 +1,5 @@
 {
     "userName": "developer",
-    "password": "metide"
+    "password": "metide",
+    "offline" : true
 }

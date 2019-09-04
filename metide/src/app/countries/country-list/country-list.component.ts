@@ -6,6 +6,9 @@ import { getDistance } from 'geolib';
 import { ModalController } from '@ionic/angular';
 import { NoteModalPage } from 'src/app/note-modal/note-modal.page';
 import { Storage } from '@ionic/storage';
+import { CountryStorageService } from 'src/app/services/country.storage.service';
+import { AppConfigService } from 'src/app/services/app-config-service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-country-list',
@@ -16,17 +19,46 @@ export class CountryListComponent implements OnInit {
 
   countries: Country[];
 
-  constructor(private countryService: CountryService,private storage: Storage,
-    private modalController: ModalController) { }
+  constructor(protected countryService: CountryService,
+    protected storage: Storage,
+    protected countryStorage: CountryStorageService,
+    protected modalController: ModalController) { }
 
 
   ngOnInit(): void {
-    this.countries = this.retrieveListOfCountries();
+    //se non sono in modalità offline
+    if (!AppConfigService.settings.offline) {
+
+      this.countryStorage.deleteStorage().then(el => {
+        const result: Country[] = this.countryService.listCountriesFromUrl();
+        this.countries = result;
+        if (result && result.length > 0) {
+          this.countryStorage.getCountries().then(els => {
+            if (!els || els.length == 0) {
+              this.countryStorage.addCountries(result).then(
+                element => {
+                });
+            }
+          });
+        }
+      });
+    }
+
+    else {
+      //altrimenti sono in modalità offline e devo aver già caricato le country a db
+      this.countryStorage.getCountries().then(
+        (els : any) => {
+          if(els && els.length > 0 && els[0])
+          this.countries = els[0];
+        }
+      );
+    }
   }
 
-  retrieveListOfCountries(): Country[] {
-    return this.countryService.retrieveCountryOrderByMetideGeoLocation();
-  }
+
+
+  // return this.countryService.retrieveCountryOrderByMetideGeoLocation();
+  // }
 
   convertCountries(countries: Country[]) {
     console.log(countries);
@@ -51,9 +83,9 @@ export class CountryListComponent implements OnInit {
     });
     return await modal.present();
   }
-  
+
   protected serialize(item: any): string {
     return JSON.stringify(item);
   }
-  
+
 }

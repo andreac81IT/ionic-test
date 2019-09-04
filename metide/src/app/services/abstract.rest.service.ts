@@ -14,29 +14,6 @@ export abstract class AbstractRestService<T>{
     this.headers = this.headers.set('Accept', 'application/json');
   }
 
-
-  /**
-   * Carica una lista di risorse da un url,
-   * il tipo ritornato è quello specificato dal parametro generico T.
-   */
-  protected listFromUrl(url: string): any {
-    let results: any;
-    let authorizationData = 'Basic ' + btoa(AppConfigService.settings.userName + ':' + AppConfigService.settings.password);
-    this.headers.set('Authorization', authorizationData);
-    this.headers.set('Access-Control-Allow-Origin', '*');
-    this.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-    this.headers.set('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
-    this.httpClient.get(`${url}`, {
-      headers: this.headers
-    })
-      .subscribe(data => {
-        results = data;
-        console.log(data);
-      })
-    return results;
-  }
-
-
   create(item: T): Observable<T> {
     return this.httpClient
       .post<T>(`${this.endpoint}`, this.serialize(item), { headers: this.headers })
