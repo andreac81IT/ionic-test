@@ -46,7 +46,7 @@ export class CountryService extends AbstractRestService<Country>{
       let orderFunction = (geo1, geo2) => {
          
          return getDistance(
-            { latitude: geo1.latitude, longitude: geo1.longitude }, { latitude: metideLocation.latitude, longitude: metideLocation.longitude }) <
+            { latitude: geo1.latitude, longitude: geo1.longitude }, { latitude: metideLocation.latitude, longitude: metideLocation.longitude }) >
 
             getDistance(
                { latitude: geo2.latitude, longitude: geo2.longitude }, { latitude: metideLocation.latitude, longitude: metideLocation.longitude }
