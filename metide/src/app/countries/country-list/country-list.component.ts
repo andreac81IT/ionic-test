@@ -20,7 +20,7 @@ export class CountryListComponent implements OnInit {
 
   }
 
-  retrieveListOfCountries() : Country[]{
+  retrieveListOfCountries() : Country[] {
      return this.countryService.retrieveCountryOrderByMetideGeoLocation();
   }
 
