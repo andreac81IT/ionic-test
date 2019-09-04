@@ -21,11 +21,7 @@ export class CountryListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.storage.clear().then(
-      (el : any) => {
-        this.countries = this.retrieveListOfCountries();
-      }
-    );
+    this.countries = this.retrieveListOfCountries();
   }
 
   retrieveListOfCountries(): Country[] {
