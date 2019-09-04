@@ -31,6 +31,7 @@ export class NoteModalPage implements OnInit {
       note => {
         this.note = note;
         this.text = note.text;
+        this.toUpdate = true;
       }
     );
 
