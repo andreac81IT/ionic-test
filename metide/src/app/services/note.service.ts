@@ -6,5 +6,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class CountryService extends AbstractRestService<Note>{
+export class NoteService extends AbstractRestService<Note>{
+    constructor(protected httpClient: HttpClient) {
+        super(httpClient, "/note");
+     }
+  
 }

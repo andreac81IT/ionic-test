@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './app-config-service';
 import { map } from 'rxjs/operators';
-
+import * as queryString from 'query-string';
 
 export abstract class AbstractRestService<T>{
 
@@ -55,6 +55,14 @@ export abstract class AbstractRestService<T>{
       .pipe(map(data => this.deserialize(data)));
   }
 
+  
+  list(queryOptions: any): Observable<T[]> {
+    return this.httpClient
+      .get(`${this.endpoint}?${queryString.stringify(queryOptions)}`)
+      .pipe(
+        map((data: any) => data)
+      );
+  }
 
   protected serialize(item: T): string {
     return JSON.stringify(item);
