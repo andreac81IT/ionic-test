@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class NoteService extends AbstractRestService<Note>{
+    
     constructor(protected httpClient: HttpClient) {
         super(httpClient, "/note");
      }

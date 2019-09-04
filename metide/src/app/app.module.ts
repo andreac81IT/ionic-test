@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {CountryService} from './services/country.service';
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpRequest } from '@angular/common/http';
 import { NoteModalPage } from './note-modal/note-modal.page';
+import { NoteService } from './services/note.service';
 
 export function initializeApp(appConfig: AppConfigService) {
   return () => appConfig.load();
@@ -23,6 +24,7 @@ export function initializeApp(appConfig: AppConfigService) {
     StatusBar,
     SplashScreen,
     CountryService,
+    NoteService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 
     AppConfigService,
