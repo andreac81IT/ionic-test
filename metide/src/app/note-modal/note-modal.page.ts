@@ -30,6 +30,7 @@ export class NoteModalPage implements OnInit {
     this.noteStorageService.getNoteByCountry(this.country.id).then(
       note => {
         this.note = note;
+        this.text = note.text;
       }
     );
 

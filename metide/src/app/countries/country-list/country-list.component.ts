@@ -5,6 +5,7 @@ import { Country } from '../../models/country.model';
 import { getDistance } from 'geolib';
 import { ModalController } from '@ionic/angular';
 import { NoteModalPage } from 'src/app/note-modal/note-modal.page';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-country-list',
@@ -15,12 +16,16 @@ export class CountryListComponent implements OnInit {
 
   countries: Country[];
 
-  constructor(private countryService: CountryService,
+  constructor(private countryService: CountryService,private storage: Storage,
     private modalController: ModalController) { }
 
 
   ngOnInit(): void {
-    this.countries = this.retrieveListOfCountries();
+    this.storage.clear().then(
+      (el : any) => {
+        this.countries = this.retrieveListOfCountries();
+      }
+    );
   }
 
   retrieveListOfCountries(): Country[] {
