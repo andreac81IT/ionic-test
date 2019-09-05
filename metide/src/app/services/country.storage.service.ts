@@ -43,6 +43,6 @@ export class CountryStorageService {
   }
 
   deleteStorage(): Promise<any> {
-    return this.storage.clear();
+    return this.storage.remove(ITEMS_KEY);
   }
 }
