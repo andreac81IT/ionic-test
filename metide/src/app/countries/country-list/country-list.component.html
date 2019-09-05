@@ -29,8 +29,8 @@
       <ion-col width-50>
         <img [src]="row.flag">
       </ion-col>
-      <ion-col width-25>
-        <ion-button (click)="presentModal(row)"><i class="icon-edit"></i></ion-button>
+      <ion-col width-10>
+        <ion-button matTooltip="edit note" (click)="presentModal(row)"><ion-icon name="create"></ion-icon></ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

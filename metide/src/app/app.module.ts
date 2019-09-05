@@ -13,6 +13,11 @@ import { NoteModalPage } from './note-modal/note-modal.page';
 import { NoteService } from './services/note.service';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 export function initializeApp(appConfig: AppConfigService) {
   return () => appConfig.load();
@@ -23,7 +28,7 @@ export function initializeApp(appConfig: AppConfigService) {
   entryComponents: [NoteModalPage],
   imports: [BrowserModule,FormsModule, IonicModule.forRoot(),
     IonicStorageModule.forRoot(), 
-  AppRoutingModule,HttpClientModule],
+  AppRoutingModule,HttpClientModule,FontAwesomeModule],
   providers: [
     StatusBar,
     SplashScreen,
