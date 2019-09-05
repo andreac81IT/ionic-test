@@ -26,9 +26,11 @@ export class CountryListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //se non sono in modalità offline
-    if (!AppConfigService.settings.offline) {
+    this.loadData();
+  }
 
+  private loadData() {
+    if (!AppConfigService.settings.offline) {
       this.countryStorage.deleteStorage().then(el => {
         const result: Country[] = this.countryService.listCountriesFromUrl();
         this.countries = result;
@@ -42,28 +44,17 @@ export class CountryListComponent implements OnInit {
           });
         }
       });
-    }
-
-    else {
+    } else {
       //altrimenti sono in modalità offline e devo aver già caricato le country a db
       this.countryStorage.getCountries().then(
-        (els : any) => {
-          if(els && els.length > 0 && els[0])
-          this.countries = els[0];
+        (els: any) => {
+          if (els && els.length > 0 && els[0])
+            this.countries = els[0];
         }
       );
     }
   }
 
-
-
-  // return this.countryService.retrieveCountryOrderByMetideGeoLocation();
-  // }
-
-  convertCountries(countries: Country[]) {
-    console.log(countries);
-    return countries.map(country => { return country });
-  }
 
   doRefresh(event) {
     console.log('Begin async operation');

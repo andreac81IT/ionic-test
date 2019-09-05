@@ -1,18 +1,24 @@
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
 
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+</ion-content>
 <p>
   <ion-grid>
     <ion-row style="padding-top:5px;padding-bottom:5px">
-      <ion-col>
+      <ion-col class="header">
         Country Name
       </ion-col>
-      <ion-col>
+      <ion-col class="header">
         National Flag
       </ion-col>
-      <ion-col>
+      <ion-col class="header">
         Insert Note
       </ion-col>
     </ion-row>
@@ -24,7 +30,7 @@
         <img [src]="row.flag">
       </ion-col>
       <ion-col width-25>
-        <ion-button (click)="presentModal(row)">Enter Note</ion-button>
+        <ion-button (click)="presentModal(row)"><i class="icon-edit"></i></ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
